@@ -1,0 +1,18 @@
+indicateur,valeur,unite,source
+prix_bas,70,dollars,S-1/A n°2 du 10/11/2026 page de couverture
+prix_haut,78,dollars,S-1/A n°2 du 10/11/2026 page de couverture
+prix_median,74,dollars,S-1/A n°2 The Offering (prix supposé pour tous les chiffres ci-dessous)
+actions_A_emises_par_societe,801351354,actions,S-1/A n°2 The Offering
+actions_A_vendues_par_actionnaires,23648646,actions,S-1/A n°2 The Offering
+actions_A_greenshoe,123750000,actions,S-1/A n°2 The Offering
+placement_prive_N_montant,26000000000,dollars,S-1/A n°2 The Offering
+placement_prive_N_actions_au_prix_median,351351348,actions,S-1/A n°2 The Offering (somme des 7 partenaires à 74 dollars)
+actions_A_apres_ipo,7427991791,actions,S-1/A n°2 The Offering page 19
+actions_N_apres_ipo_au_prix_median,5658680800,actions,S-1/A n°2 The Offering page 20 (inclut le placement privé à 74 dollars)
+actions_T_apres_ipo,1,actions,S-1/A n°2 The Offering page 20
+actions_E_apres_ipo,0,actions,S-1/A n°2 The Offering page 20
+actions_F_apres_ipo,1,actions,S-1/A n°2 The Offering page 20
+actions_total_apres_ipo_au_prix_median,13086672593,actions,S-1/A n°2 The Offering page 20 (sans greenshoe)
+actions_total_avec_greenshoe_au_prix_median,13210422593,actions,S-1/A n°2 The Offering page 20
+produit_net_au_prix_median,84600000000,dollars,S-1/A n°2 Use of proceeds (actions A émises et placement privé N)
+produit_net_avec_greenshoe_au_prix_median,93700000000,dollars,S-1/A n°2 Use of proceeds
