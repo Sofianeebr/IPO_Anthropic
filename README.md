@@ -73,4 +73,4 @@ Ce projet est purement pédagogique : il n'a en aucun cas pour but de donner un 
 
 ## Auteur
 
-Sofiane Bouguerra
+Sofiane B
