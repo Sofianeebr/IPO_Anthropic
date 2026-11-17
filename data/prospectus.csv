@@ -16,3 +16,33 @@ actions_total_apres_ipo_au_prix_median,13086672593,actions,S-1/A n°2 The Offeri
 actions_total_avec_greenshoe_au_prix_median,13210422593,actions,S-1/A n°2 The Offering page 20
 produit_net_au_prix_median,84600000000,dollars,S-1/A n°2 Use of proceeds (actions A émises et placement privé N)
 produit_net_avec_greenshoe_au_prix_median,93700000000,dollars,S-1/A n°2 Use of proceeds
+actions_A_base_30_09_2026,6626640437,actions,S-1/A n°2 The Offering (base du total au 30/09/2026 après conversions)
+actions_N_base_30_09_2026,5307329452,actions,S-1/A n°2 The Offering (base du total au 30/09/2026 après conversions)
+exclu_options_actions,1774342693,actions,S-1/A n°2 The Offering excludes (options sur actions A au 30/09/2026)
+exclu_options_prix_exercice_moyen,2.91,dollars,S-1/A n°2 The Offering excludes (prix d'exercice moyen pondéré des options)
+exclu_rsu_non_acquises,1026660010,actions,S-1/A n°2 The Offering excludes (RSU au 30/09/2026 non acquises au 19/11/2026)
+exclu_rsu_attribuees_apres_30_09,47041287,actions,S-1/A n°2 The Offering excludes (RSU attribuées après le 30/09/2026)
+exclu_acquisitions_actions_A,561963,actions,S-1/A n°2 The Offering excludes (actions A émises après le 30/09/2026 pour des acquisitions)
+exclu_acquisitions_actions_N,848882,actions,S-1/A n°2 The Offering excludes (actions N émises après le 30/09/2026 pour des acquisitions)
+anc_historique_total,-150600000000,dollars,S-1/A n°2 Dilution (actif net tangible historique au 30/09/2026)
+anc_historique_par_action,-68.47,dollars,S-1/A n°2 Dilution
+anc_pro_forma_par_action,1.90,dollars,S-1/A n°2 Dilution (après conversions et règlement des RSU)
+anc_apres_ipo_total_au_prix_median,107400000000,dollars,S-1/A n°2 Dilution
+anc_apres_ipo_par_action_au_prix_median,8.21,dollars,S-1/A n°2 Dilution
+dilution_nouveaux_investisseurs_au_prix_median,65.79,dollars,S-1/A n°2 Dilution (74 moins 8.21)
+anciens_actionnaires_actions,11933969889,actions,S-1/A n°2 Dilution tableau page 134
+anciens_actionnaires_montant_paye,137255453209,dollars,S-1/A n°2 Dilution tableau page 134
+anciens_actionnaires_prix_moyen,11.50,dollars,S-1/A n°2 Dilution tableau page 134
+variation_produit_net_par_dollar_de_prix,793000000,dollars,S-1/A n°2 Dilution (effet de 1 $ de plus ou de moins sur le prix)
+dil_actions_A_total,7430143944,actions,S-1/A n°2 tableau de dilution page 24 (total après ajustements additionnels)
+dil_actions_N_total_au_prix_median,7804580273,actions,S-1/A n°2 tableau page 24 (inclut le placement privé à 74 $ et les rollover notes)
+dil_options_brutes,1774342693,actions,S-1/A n°2 tableau page 24 (options avant méthode du rachat d'actions)
+dil_options_rachat_au_prix_median,69774828,actions,S-1/A n°2 tableau page 24 (actions rachetées avec le prix d'exercice des options)
+dil_options_nettes_au_prix_median,1704567865,actions,S-1/A n°2 tableau page 24
+dil_rsu_total,1073701297,actions,S-1/A n°2 tableau page 24
+dil_actions_T_F_sans_droit_economique,2,actions,S-1/A n°2 tableau page 24
+dil_rollover_notes_actions_N,1563617444,actions,S-1/A n°2 tableau page 24 (dette convertible au delà du plafond de détention)
+dil_initial_public_benefit_issuance_actions_N,846840960,actions,S-1/A n°2 tableau page 24 (détenues par une filiale)
+dil_vested_matching_obligation_actions_N,553441297,actions,S-1/A n°2 tableau page 24 (plan d'abondement des dons des salariés)
+dil_matching_issuance_actions_N,27991850,actions,S-1/A n°2 tableau page 24
+dil_acquisition_holdback_actions_A,1590190,actions,S-1/A n°2 tableau page 24
