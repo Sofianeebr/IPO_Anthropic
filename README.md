@@ -28,15 +28,17 @@ Ce projet a pour but de suivre le processus de valorisation durant l'introductio
 
 ## Premiers résultats
 
-Valorisation implicite de la fourchette de prix, en base non diluée (sans greenshoe) :
+Valorisation implicite de la fourchette de prix (sans greenshoe) :
 
-| Prix par action | Nombre d'actions        | Capitalisation                     | Base non diluée                                       | Base diluée                                |
-| --------------- | ----------------------- | ---------------------------------- | ------------------------------------------------------ | ------------------------------------------- |
-| 70 $            | environ 13,11 milliards | environ 917 milliards de dollars   | capitalisation 917.5 milliards de dollars         | 1262.0 milliards de dollars                 |
-| 74 $            | environ 13,09 milliards | environ 968 milliards de dollars   | capitalisation 968.4 milliards de dollars              | capitalisation 1333.0 milliards de dollars  |
-| 78 $            | environ 13,07 milliards | environ 1 019 milliards de dollars | capitalisation 1019.4 milliards de dollars             | capitalisation 1403.9 milliards de dollars  |
+| Prix par action | Actions, base non diluée | Capitalisation non diluée | Actions, base diluée | Capitalisation diluée |
+|---|---|---|---|---|
+| 70 $ | environ 13,11 milliards | environ 917 milliards de dollars | environ 18,03 milliards | environ 1 262 milliards de dollars |
+| 74 $ | environ 13,09 milliards | environ 968 milliards de dollars | environ 18,01 milliards | environ 1 333 milliards de dollars |
+| 78 $ | environ 13,07 milliards | environ 1 019 milliards de dollars | environ 18,00 milliards | environ 1 404 milliards de dollars |
 
-Le nombre d'actions baisse quand le prix monte : les partenaires du placement privé investissent un montant fixe de 26 milliards de dollars, ils reçoivent donc moins d'actions quand chaque action coûte plus cher.
+Le nombre d'actions baisse quand le prix monte : les partenaires du placement privé investissent un montant fixe de 26 milliards de dollars, ils reçoivent donc moins d'actions quand chaque action coûte plus cher. En base diluée, la méthode du rachat d'actions joue dans le même sens pour les stock-options.
+
+La base diluée ajoute environ 4,9 milliards d'actions (stock-options, RSU, dette convertible et plans d'abondement des dons des salariés), d'après le tableau de dilution du prospectus. Les calculs retrouvent les totaux du prospectus au prix médian (voir `tests/`).
 
 ## Sources
 
@@ -47,6 +49,7 @@ Le nombre d'actions baisse quand le prix monte : les partenaires du placement pr
 
 - Valorisation implicite : prix par action x nombre total d'actions, toutes classes confondues
 - Recalcul des actions du placement privé selon le prix (montant fixe de 26 milliards de dollars divisé par le prix)
+- Base diluée : méthode du rachat d'actions pour les stock-options (prix d'exercice moyen de 2,91 $), dette convertible incluse, actions T et F sans droit économique exclues
 
 ## Organisation du dossier
 
@@ -65,6 +68,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 python src/valorisation.py
+pytest
 ```
 
 ## Avertissement
