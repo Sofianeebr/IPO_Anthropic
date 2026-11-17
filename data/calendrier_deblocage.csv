@@ -1,0 +1,25 @@
+evenement,declencheur,date_estimee,date_certaine,actions_millions,remarque
+Premier jour de cotation,premier jour après le prospectus,2026-11-19,oui,316,"salariés, dirigeants et administrateurs hors fondateurs (jusqu'à 10 %)"
+J+27,27e jour après le prospectus,2026-12-15,oui,299,
+J+48,48e jour après le prospectus,2027-01-05,oui,299,
+J+62,62e jour après le prospectus,2027-01-19,oui,349,
+J+76,76e jour après le prospectus,2027-02-02,oui,349,
+Résultats annuels 2026,2e jour de Bourse après les résultats annuels 2026,2027-02-27,non,1700,
+Résultats 2026 + 13 jours,13e jour après les résultats annuels 2026,2027-03-10,non,474,
+Résultats 2026 + 27 jours,27e jour après les résultats annuels 2026,2027-03-24,non,474,
+Résultats 2026 + 41 jours,41e jour après les résultats annuels 2026,2027-04-07,non,474,
+Résultats 2026 + 55 jours,55e jour après les résultats annuels 2026,2027-04-21,non,474,
+Résultats 2026 + 69 jours,69e jour après les résultats annuels 2026,2027-05-05,non,474,
+Fin du lock-up de 180 jours,plus tôt entre le 2e jour après les résultats du T1 2027 et le 180e jour,2027-05-08,non,3000,date au plus tard le 17/05/2027
+Résultats T1 2027 + 34 jours,34e jour après les résultats du T1 2027,2027-06-09,non,449,
+Résultats T1 2027 + 48 jours,48e jour après les résultats du T1 2027,2027-06-23,non,449,
+Résultats T1 2027 + 62 jours,62e jour après les résultats du T1 2027,2027-07-07,non,449,
+Résultats T1 2027 + 76 jours,76e jour après les résultats du T1 2027,2027-07-21,non,449,
+Résultats T2 2027,2e jour de Bourse après les résultats du T2 2027,2027-08-07,non,562,
+Résultats T2 2027 + 27 jours,27e jour après les résultats du T2 2027,2027-09-01,non,505,
+Résultats T2 2027 + 41 jours,41e jour après les résultats du T2 2027,2027-09-15,non,505,
+Résultats T2 2027 + 55 jours,55e jour après les résultats du T2 2027,2027-09-29,non,505,
+Résultats T2 2027 + 69 jours,69e jour après les résultats du T2 2027,2027-10-13,non,505,
+Résultats T2 2027 + 83 jours,83e jour après les résultats du T2 2027,2027-10-27,non,505,
+Fin du lock-up de 365 jours,plus tôt entre le 2e jour après les résultats du T3 2027 et le 365e jour,2027-11-06,non,1900,"cofondateurs et actionnaires de plus de 0,5 % ; date au plus tard le 18/11/2027"
+Placement privé : enregistrement possible pour Google,fin de la Restricted Period (plus tôt entre le 2e jour après les résultats du T1 2027 et le 180e jour),2027-05-08,non,351,"actions N du placement privé (montant fixe de 26 milliards de dollars, nombre à 74 $), hors calendrier du lock-up"

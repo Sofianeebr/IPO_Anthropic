@@ -21,10 +21,11 @@ Ce projet a pour but de suivre le processus de valorisation durant l'introductio
 
 - [X] Valorisation implicite de la fourchette de prix (base non diluée)
 - [X] Valorisation en base totalement diluée
-- [ ] Analyse des classes d'actions et du placement privé
+- [X] Analyse des classes d'actions : qui possède et qui décide (`docs/02_gouvernance_et_repartition.md`)
+- [X] Analyse du placement privé et du calendrier des ventes futures (`docs/02_gouvernance_et_repartition.md`)
 - [ ] Valorisation par les comparables et par les flux de trésorerie actualisés
 - [ ] Réaction du marché après la cotation
-- [ ] Dashboard interactif
+- [ ] Dashboard interactif : valorisation selon le prix, répartition du capital et des droits de vote, simulation de l'impact des ventes futures sur le cours
 
 ## Premiers résultats
 
@@ -69,6 +70,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 python src/valorisation.py
 pytest
+streamlit run app/app.py
 ```
 
 ## Avertissement
