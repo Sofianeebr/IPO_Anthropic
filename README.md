@@ -20,7 +20,7 @@ Ce projet a pour but de suivre le processus de valorisation durant l'introductio
 ## Avancement
 
 - [X] Valorisation implicite de la fourchette de prix (base non diluée)
-- [ ] Valorisation en base totalement diluée
+- [X] Valorisation en base totalement diluée
 - [ ] Analyse des classes d'actions et du placement privé
 - [ ] Valorisation par les comparables et par les flux de trésorerie actualisés
 - [ ] Réaction du marché après la cotation
@@ -30,11 +30,11 @@ Ce projet a pour but de suivre le processus de valorisation durant l'introductio
 
 Valorisation implicite de la fourchette de prix, en base non diluée (sans greenshoe) :
 
-| Prix par action | Nombre d'actions        | Capitalisation                     |
-| --------------- | ----------------------- | ---------------------------------- |
-| 70 $            | environ 13,11 milliards | environ 917 milliards de dollars   |
-| 74 $            | environ 13,09 milliards | environ 968 milliards de dollars   |
-| 78 $            | environ 13,07 milliards | environ 1 019 milliards de dollars |
+| Prix par action | Nombre d'actions        | Capitalisation                     | Base non diluée                                       | Base diluée                                |
+| --------------- | ----------------------- | ---------------------------------- | ------------------------------------------------------ | ------------------------------------------- |
+| 70 $            | environ 13,11 milliards | environ 917 milliards de dollars   | capitalisation 917.5 milliards de dollars         | 1262.0 milliards de dollars                 |
+| 74 $            | environ 13,09 milliards | environ 968 milliards de dollars   | capitalisation 968.4 milliards de dollars              | capitalisation 1333.0 milliards de dollars  |
+| 78 $            | environ 13,07 milliards | environ 1 019 milliards de dollars | capitalisation 1019.4 milliards de dollars             | capitalisation 1403.9 milliards de dollars  |
 
 Le nombre d'actions baisse quand le prix monte : les partenaires du placement privé investissent un montant fixe de 26 milliards de dollars, ils reçoivent donc moins d'actions quand chaque action coûte plus cher.
 
