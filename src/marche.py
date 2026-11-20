@@ -9,12 +9,18 @@ RACINE = Path(__file__).resolve().parents[1]
 CHEMIN_COURS = RACINE / "data" / "cours_ANT.csv"
 
 
-def telecharger_cours(ticker="ANT", debut="2026-11-19", chemin=CHEMIN_COURS):
+def chemin_cours(ticker):
+    """Fichier local des cours d'un titre (par exemple data/cours_SPCX.csv)."""
+    return RACINE / "data" / f"cours_{ticker}.csv"
+
+
+def telecharger_cours(ticker="ANT", debut="2026-11-19", chemin=None):
     """Télécharge les cours quotidiens avec yfinance et les enregistre dans un CSV.
 
     Si le téléchargement échoue (yfinance indisponible, action pas encore cotée),
     on relit la dernière copie enregistrée, pour que les résultats restent reproductibles.
     """
+    chemin = chemin or chemin_cours(ticker)
     try:
         import yfinance as yf
 
@@ -34,7 +40,7 @@ def telecharger_cours(ticker="ANT", debut="2026-11-19", chemin=CHEMIN_COURS):
 
 
 def charger_cours(chemin=CHEMIN_COURS):
-    """Relit les cours enregistrés en local."""
+    """Relit les cours enregistrés en local (chemin ou fichier d'un ticker)."""
     return pd.read_csv(chemin, index_col=0, parse_dates=True)
 
 

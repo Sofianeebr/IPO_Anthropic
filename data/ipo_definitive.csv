@@ -1,0 +1,33 @@
+indicateur,valeur,unite,source
+prix_ipo,83,dollars,424B4 du 19/11/2026 page de couverture
+actions_A_emises_par_societe,956351354,actions,424B4 The Offering (801 351 354 prévues dans le S-1/A n°2 plus 155 000 000 ajoutées par le S-1MEF du 18/11/2026)
+actions_A_vendues_par_actionnaires,23648646,actions,424B4 The Offering
+actions_A_offertes_total,980000000,actions,424B4 page de couverture
+actions_A_greenshoe,147000000,actions,424B4 The Offering (15 % de 980 millions)
+produit_brut_offre,81340000000,dollars,424B4 page de couverture
+commission_banques_par_action,0.56122,dollars,424B4 page de couverture
+commission_banques_total,550000000,dollars,424B4 page de couverture
+produit_avant_frais_societe,78840438875,dollars,424B4 page de couverture
+produit_avant_frais_actionnaires_vendeurs,1949565525,dollars,424B4 page de couverture
+placement_prive_N_montant,26000000000,dollars,424B4 The Offering
+placement_prive_N_actions,313253007,actions,424B4 The Offering (somme des 7 partenaires)
+produit_net_societe,104800000000,dollars,424B4 Use of proceeds (actions A émises et placement privé)
+produit_net_societe_avec_greenshoe,117000000000,dollars,424B4 Use of proceeds
+actions_A_apres_ipo,7583103996,actions,424B4 The Offering
+actions_N_apres_ipo,5636538278,actions,424B4 The Offering
+actions_T_apres_ipo,1,actions,424B4 The Offering
+actions_E_apres_ipo,0,actions,424B4 The Offering
+actions_F_apres_ipo,1,actions,424B4 The Offering
+actions_total_apres_ipo,13219642276,actions,424B4 The Offering
+actions_total_apres_ipo_avec_greenshoe,13366642276,actions,424B4 The Offering
+conversion_preferentielles_actions_A,4408209450,actions,424B4 (4 408 097 245 dans le S-1/A n°2)
+conversion_preferentielles_actions_N,4153032598,actions,424B4 (4 153 017 914 dans le S-1/A n°2)
+conversion_dette_aws_principal,612700000,dollars,424B4 (579 300 000 dans le S-1/A n°2)
+conversion_dette_aws_actions_N,292768653,actions,424B4 (276 827 518 dans le S-1/A n°2)
+rollover_notes_actions_N,1547676309,actions,424B4 tableau de dilution (1 563 617 444 dans le S-1/A n°2)
+dil_actions_A_total,7585256149,actions,424B4 tableau de dilution
+dil_actions_N_total,7766496616,actions,424B4 tableau de dilution
+dil_options_rachat,62208882,actions,424B4 tableau de dilution (méthode du rachat d'actions à 83 $)
+dil_options_nettes,1712133811,actions,424B4 tableau de dilution
+dil_rsu_total,1073701297,actions,424B4 tableau de dilution
+dil_actions_T_F,2,actions,424B4 tableau de dilution

@@ -1,0 +1,34 @@
+indicateur,valeur,unite,source
+prix_ipo,135,dollars,424B4 SpaceX du 11/06/2026
+actions_A_offertes,555555555,actions,424B4 The Offering
+actions_A_greenshoe,83333333,actions,424B4 (exercée en totalité selon le communiqué de clôture du 15/06/2026)
+actions_vendues_par_actionnaires,0,actions,424B4 (aucune offre secondaire)
+placement_prive_montant,0,dollars,424B4 (pas de placement privé concomitant)
+produit_brut_offre,74999999925,dollars,424B4 page de couverture
+commission_banques_total,500000000,dollars,"424B4 page de couverture (0,90 $ par action ; pas de commission sur la greenshoe)"
+produit_net_avec_greenshoe,85700000000,dollars,424B4 Use of proceeds
+actions_A_apres_ipo,7380196910,actions,424B4 The Offering
+actions_A_apres_ipo_avec_greenshoe,7463530243,actions,424B4 The Offering
+actions_B_apres_ipo,5695668265,actions,424B4 The Offering (10 voix par action)
+voix_par_action_B,10,voix,424B4
+part_voix_elon_musk,0.824,part,"424B4 (environ 82,4 % après l'offre)"
+part_voix_actions_B_elon_musk,0.811,part,424B4
+exclu_options_A,133793640,actions,"424B4 (prix d'exercice moyen 27,65 $)"
+exclu_options_A_prix_exercice,27.65,dollars,424B4
+exclu_options_B,358169015,actions,"424B4 (prix d'exercice moyen 8,22 $)"
+exclu_options_B_prix_exercice,8.22,dollars,424B4
+exclu_rsu_A,152298290,actions,424B4 (128 455 370 au 31/03/2026 et 23 842 920 attribuées ensuite)
+exclu_rsu_B,931450,actions,424B4
+chiffre_affaires_2023,10387,millions de dollars,424B4 Summary Consolidated Financial Data
+chiffre_affaires_2024,14015,millions de dollars,424B4
+chiffre_affaires_2025,18674,millions de dollars,424B4
+chiffre_affaires_T1_2025,4067,millions de dollars,424B4
+chiffre_affaires_T1_2026,4694,millions de dollars,424B4
+resultat_exploitation_2025,-2589,millions de dollars,424B4
+resultat_exploitation_T1_2026,-1943,millions de dollars,424B4
+resultat_net_2025,-4937,millions de dollars,424B4
+flux_tresorerie_exploitation_2025,6785,millions de dollars,424B4
+investissements_2025,20737,millions de dollars,424B4 (capital expenditures)
+flux_tresorerie_exploitation_T1_2026,1047,millions de dollars,424B4
+investissements_T1_2026,10107,millions de dollars,424B4
+tresorerie_31_03_2026,15852,millions de dollars,424B4

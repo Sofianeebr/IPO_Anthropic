@@ -13,6 +13,9 @@ sys.path.insert(0, str(RACINE / "src"))
 from donnees import charger_prospectus  # noqa: E402
 from gouvernance import repartition, voix_des_cofondateurs  # noqa: E402
 from valorisation import actions_diluees, actions_non_diluees, capitalisation  # noqa: E402
+from finances import (bfr_exploitation, charger_bilan, charger_etats, charger_trimestres,  # noqa: E402
+                      chiffre_affaires_annuel, diagnostic)
+from comparaison import parcours_depuis_ipo, tableau_comparatif  # noqa: E402
 
 BLEU, ORANGE, GRIS = "#38BDF8", "#F59E0B", "#64748B"
 TURQUOISE = "#2DD4BF"
@@ -70,21 +73,25 @@ st.title("Analyse de l'IPO d'Anthropic")
 st.markdown(
     '<div class="sous-titre">Combien vaut Anthropic, qui décide, et quelles actions pourront arriver sur le marché.</div>'
     '<span class="badge">Nasdaq <b>ANT</b></span>'
-    '<span class="badge">Fourchette <b>70 à 78 $</b></span>'
-    '<span class="badge">825 M d\'actions offertes</span>'
-    '<span class="badge">Source <b>S-1/A n°2</b> du 10/11/2026</span>',
+    '<span class="badge">Prix final <b>83 $</b> (fourchette 70 à 78 $)</span>'
+    '<span class="badge">980 M d\'actions offertes</span>'
+    '<span class="badge">1er jour <b>+17,1 %</b></span>'
+    '<span class="badge">Sources <b>S-1/A n°2</b> et <b>424B4</b></span>',
     unsafe_allow_html=True,
 )
 st.caption("Projet pédagogique, pas un conseil en investissement.")
 
 donnees = charger_prospectus(RACINE / "data" / "prospectus.csv")
-onglet_valo, onglet_pouvoir, onglet_ventes = st.tabs(
-    ["Valorisation selon le prix", "Qui décide ?", "Ventes futures"]
+definitif = charger_prospectus(RACINE / "data" / "ipo_definitive.csv")
+comparatif = tableau_comparatif()
+onglet_valo, onglet_jour, onglet_fi, onglet_pouvoir, onglet_ventes, onglet_spcx = st.tabs(
+    ["Valorisation selon le prix", "Prix final et premier jour", "Diagnostic financier",
+     "Qui décide ?", "Ventes futures", "Comparaison avec SpaceX"]
 )
 
 # ---------------------------------------------------------------- Valorisation
 with onglet_valo:
-    prix = st.slider("Prix de l'IPO (dollars par action)", 60.0, 100.0, 74.0, 0.5)
+    prix = st.slider("Prix de l'IPO (dollars par action)", 60.0, 100.0, 83.0, 0.5)
     nb_nd, nb_d = actions_non_diluees(prix, donnees), actions_diluees(prix, donnees)
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Capitalisation, base non diluée", f"{capitalisation(prix, nb_nd) / 1e9:,.0f} Md$")
@@ -111,13 +118,18 @@ with onglet_valo:
                              fill="tonexty", fillcolor="rgba(245,158,11,0.08)",
                              hovertemplate="%{y:,.0f} Md$<extra>diluée</extra>"))
     fig.add_vline(x=prix, line_dash="dot", line_color=TURQUOISE, line_width=1.5)
+    fig.add_trace(go.Scatter(
+        x=[83, 83], y=[comparatif.loc["capitalisation_base_ipo", "ANT"] / 1e9, comparatif.loc["capitalisation_diluee_ipo", "ANT"] / 1e9],
+        mode="markers", name="Réel (424B4, 83 $)", marker=dict(color="#F8FAFC", size=10, symbol="diamond"),
+        hovertemplate="%{y:,.0f} Md$<extra>424B4</extra>"))
     fig.update_layout(xaxis_title="Prix de l'IPO ($)", yaxis_title="Capitalisation (milliards de $)", hovermode="x unified")
     mise_en_forme(fig, 450)
     st.plotly_chart(fig, width="stretch")
     st.markdown(
         "<p class='note'>La base diluée ajoute environ 4,9 milliards d'actions (stock-options après méthode du rachat d'actions, "
         "RSU, dette convertible, plans liés aux dons des salariés). Chaque dollar de prix ajoute environ "
-        "18 milliards de dollars de capitalisation diluée.</p>", unsafe_allow_html=True
+        "18 milliards de dollars de capitalisation diluée. Les courbes viennent du modèle construit sur le S-1/A ; "
+        "les losanges blancs sont les chiffres réels du prospectus définitif, un peu au-dessus car l'offre a été augmentée de 155 millions d'actions.</p>", unsafe_allow_html=True
     )
 
 # ---------------------------------------------------------------- Qui décide ?
@@ -170,9 +182,9 @@ with onglet_ventes:
     lockup = calendrier[~calendrier["evenement"].str.startswith("Placement privé")].sort_values("date_estimee")
     lockup["cumul_milliards"] = lockup["actions_millions"].cumsum() / 1000
     m1, m2, m3 = st.columns(3)
-    m1.metric("Actions mises en vente lors de l'IPO", "0,83 Md")
+    m1.metric("Actions mises en vente lors de l'IPO", "0,98 Md", "424B4", delta_color="off")
     m2.metric("Actions débloquées progressivement", f"{lockup['actions_millions'].sum() / 1000:.1f} Md")
-    m3.metric("Débloquées dès le premier jour", "0,32 Md", "38 % des actions de l'IPO", delta_color="off")
+    m3.metric("Débloquées dès le premier jour", "0,32 Md", "environ 33 % des actions de l'IPO", delta_color="off")
 
     fig3 = go.Figure()
     fig3.add_trace(go.Scatter(x=lockup["date_estimee"], y=lockup["cumul_milliards"], line_shape="hv",
@@ -180,7 +192,7 @@ with onglet_ventes:
                               fill="tozeroy", fillcolor="rgba(245,158,11,0.10)",
                               customdata=lockup[["evenement", "actions_millions"]],
                               hovertemplate="%{customdata[0]}<br>+%{customdata[1]} millions<br>cumul %{y:.1f} Md<extra></extra>"))
-    fig3.add_hline(y=0.825, line_dash="dot", line_color=BLEU, annotation_text="actions vendues lors de l'IPO",
+    fig3.add_hline(y=0.98, line_dash="dot", line_color=BLEU, annotation_text="actions vendues lors de l'IPO",
                    annotation_font_color=BLEU)
     fig3.add_vrect(x0="2027-05-01", x1="2027-05-20", fillcolor=TURQUOISE, opacity=0.12, line_width=0,
                    annotation_text="mai 2027 : fin du lock-up de 180 jours et ventes possibles pour Google",
@@ -191,3 +203,144 @@ with onglet_ventes:
     st.caption("Dates estimées à partir des règles du prospectus (certaines dépendent des dates de publication des résultats).")
     st.info("La simulation de l'impact d'une vente sur le cours sera ajoutée après la cotation, "
             "à partir du volume et de la volatilité réels de l'action ANT.")
+
+# ---------------------------------------------------------------- Prix final et premier jour
+with onglet_jour:
+    a = comparatif["ANT"]
+    j1, j2, j3, j4 = st.columns(4)
+    j1.metric("Prix d'IPO", "83 $", "+5 $ au-dessus de la fourchette", delta_color="off")
+    j2.metric("Clôture du 1er jour", "97,17 $", f"{a['rendement_cloture_j1']:+.1%}")
+    j3.metric("Argent laissé sur la table", f"{a['argent_laisse_sur_la_table'] / 1e9:.1f} Md$")
+    j4.metric("Capitalisation diluée à la clôture", f"{a['capitalisation_diluee_cloture_j1'] / 1e12:.2f} T$")
+
+    cours = pd.read_csv(RACINE / "data" / "cours_ANT.csv", index_col=0, parse_dates=True).iloc[0]
+    fig4 = go.Figure()
+    fig4.add_trace(go.Bar(x=["Prix d'IPO", "Ouverture", "Plus haut", "Plus bas", "Clôture"],
+                          y=[83, cours["Open"], cours["High"], cours["Low"], cours["Close"]],
+                          marker_color=[GRIS, BLEU, TURQUOISE, ORANGE, BLEU],
+                          text=[f"{v:.2f} $<br>{v / 83 - 1:+.1%}" for v in [83, cours["Open"], cours["High"], cours["Low"], cours["Close"]]],
+                          textposition="outside", cliponaxis=False, hovertemplate="%{x} : %{y:.2f} $<extra></extra>"))
+    fig4.add_hline(y=83, line_dash="dot", line_color=GRIS)
+    fig4.update_layout(yaxis_title="$ par action", yaxis_range=[0, 130], showlegend=False)
+    mise_en_forme(fig4, 420)
+    st.plotly_chart(fig4, width="stretch")
+
+    st.subheader("Du S-1/A n°2 au prospectus définitif")
+    ecarts = pd.DataFrame({
+        "Élément": ["Prix", "Actions A émises par la société", "Total offert", "Actions N du placement privé (26 Md$)",
+                    "Base non diluée", "Base diluée"],
+        "S-1/A n°2": ["70 à 78 $", "801 351 354", "825 000 000", "351 351 350 (à 74 $)", "13 086 672 593 (à 74 $)", "18 012 993 379 (à 74 $)"],
+        "424B4": ["83 $", "956 351 354", "980 000 000", f"{definitif['placement_prive_N_actions']:,.0f}".replace(",", " "),
+                  f"{definitif['actions_total_apres_ipo']:,.0f}".replace(",", " "), "18 137 587 875"],
+    })
+    st.dataframe(ecarts, hide_index=True, width="stretch")
+    st.markdown(
+        "<p class='note'>La demande a permis à la fois de relever le prix au-dessus de la fourchette et d'augmenter l'offre de 19 %. "
+        "Le placement privé étant un montant fixe en dollars, un prix plus élevé réduit le nombre d'actions N émises. "
+        "Détail dans docs/04_ipo_definitive_et_premier_jour.md.</p>", unsafe_allow_html=True)
+
+# ---------------------------------------------------------------- Diagnostic financier
+with onglet_fi:
+    diag = diagnostic(charger_etats())
+    tri = charger_trimestres()
+    annuel = chiffre_affaires_annuel(tri)
+    f1, f2, f3, f4 = st.columns(4)
+    f1.metric("CA des 12 derniers mois", f"{annuel['quatre_derniers_trimestres'] / 1000:.1f} Md$")
+    f2.metric("Croissance du T3 2026 sur un an", f"x {1 + annuel['croissance_sur_un_an_dernier_trimestre']:.1f}")
+    f3.metric("Marge après calcul (9M2026)", f"{diag.loc['9M2026', 'marge_apres_calcul']:.0%}")
+    f4.metric("Flux disponible (9M2026)", f"{diag.loc['9M2026', 'flux_disponible'] / 1000:+.1f} Md$")
+
+    trimestres = tri.columns
+    fig5 = go.Figure()
+    fig5.add_trace(go.Bar(x=list(trimestres), y=tri.loc["chiffre_affaires", trimestres] / 1000, name="Chiffre d'affaires",
+                          marker_color=BLEU, hovertemplate="%{y:.1f} Md$<extra>CA</extra>"))
+    fig5.add_trace(go.Bar(x=list(trimestres), y=tri.loc["calcul_et_infrastructure", trimestres] / 1000, name="Coût du calcul",
+                          marker_color=ORANGE, hovertemplate="%{y:.1f} Md$<extra>calcul</extra>"))
+    fig5.update_layout(barmode="group", yaxis_title="Milliards de $", bargap=0.3)
+    mise_en_forme(fig5, 400)
+    st.plotly_chart(fig5, width="stretch")
+
+    g1, g2 = st.columns(2)
+    with g1:
+        st.markdown("**Du résultat net au flux de trésorerie (9M2026, Md$)**")
+        e = charger_etats()["9M2026"]
+        fig6 = go.Figure(go.Waterfall(
+            x=["Résultat net", "Juste valeur et autres", "Rémunération en actions", "Dotations", "CAF",
+               "Variation de BFR", "Flux d'exploitation", "Investissements", "Flux disponible"],
+            measure=["absolute", "relative", "relative", "relative", "total", "relative", "total", "relative", "total"],
+            y=[e["resultat_net"] / 1000, e["elements_non_monetaires_hors_dotations_et_actions"] / 1000,
+               e["remuneration_en_actions"] / 1000, e["dotations_amortissements"] / 1000, 0,
+               e["variation_bfr"] / 1000, 0, -diag.loc["9M2026", "investissements"] / 1000, 0],
+            increasing=dict(marker_color=TURQUOISE), decreasing=dict(marker_color=ORANGE),
+            totals=dict(marker_color=BLEU), connector=dict(line=dict(color="#334155")),
+            hovertemplate="%{x} : %{y:.1f} Md$<extra></extra>"))
+        mise_en_forme(fig6, 420)
+        fig6.update_layout(showlegend=False)
+        st.plotly_chart(fig6, width="stretch")
+    with g2:
+        st.markdown("**Indicateurs du cours d'analyse financière**")
+        table = pd.DataFrame({
+            "Indicateur": ["Marge d'exploitation", "Marge d'exploitation ajustée", "Calcul / CA", "CAF (M$)",
+                           "Investissements / dotations", "BFR d'exploitation au 30/09 (M$)", "Engagements de calcul (Md$)"],
+            "2025": [f"{diag.loc['2025', 'marge_exploitation']:.0%}", f"{diag.loc['2025', 'marge_exploitation_ajustee']:.0%}",
+                     f"{diag.loc['2025', 'poids_calcul_dans_ca']:.0%}", f"{diag.loc['2025', 'caf']:,.0f}",
+                     f"{diag.loc['2025', 'investissements_sur_dotations']:.1f}", "", ""],
+            "9M2026": [f"{diag.loc['9M2026', 'marge_exploitation']:.1%}", f"{diag.loc['9M2026', 'marge_exploitation_ajustee']:.1%}",
+                       f"{diag.loc['9M2026', 'poids_calcul_dans_ca']:.0%}", f"{diag.loc['9M2026', 'caf']:,.0f}",
+                       f"{diag.loc['9M2026', 'investissements_sur_dotations']:.1f}",
+                       f"{bfr_exploitation(charger_bilan()):,.0f}", "900,9"],
+        })
+        st.dataframe(table, hide_index=True, width="stretch")
+        st.markdown(
+            "<p class='note'>La perte nette de 104 Md$ vient à 91 % de la variation de juste valeur de la dette convertible : "
+            "plus Anthropic vaut cher, plus la valeur des actions promises aux prêteurs monte, et cette hausse est une charge comptable "
+            "sans sortie d'argent. L'activité, elle, dégage une CAF positive.</p>", unsafe_allow_html=True)
+
+# ---------------------------------------------------------------- Comparaison avec SpaceX
+with onglet_spcx:
+    s = comparatif["SPCX"]
+    a = comparatif["ANT"]
+    st.markdown("<p class='note'>SpaceX (SPCX) est entrée au Nasdaq le 12/06/2026 à 135 $. "
+                "Chiffres du prospectus définitif de chaque société.</p>", unsafe_allow_html=True)
+    s1, s2, s3, s4 = st.columns(4)
+    s1.metric("Capitalisation diluée à l'IPO", f"{a['capitalisation_diluee_ipo'] / 1e9:,.0f} Md$",
+              f"SpaceX : {s['capitalisation_diluee_ipo'] / 1e9:,.0f} Md$", delta_color="off")
+    s2.metric("Capitalisation / CA 12 mois", f"{a['capitalisation_diluee_sur_ca']:.0f} x",
+              f"SpaceX : {s['capitalisation_diluee_sur_ca']:.0f} x", delta_color="off")
+    s3.metric("Rendement 1er jour (clôture)", f"{a['rendement_cloture_j1']:+.1%}",
+              f"SpaceX : {s['rendement_cloture_j1']:+.1%}", delta_color="off")
+    s4.metric("Flottant", f"{a['flottant']:.1%}", f"SpaceX : {s['flottant']:.1%}", delta_color="off")
+
+    parcours = pd.concat([parcours_depuis_ipo("ANT", 83), parcours_depuis_ipo("SPCX", 135)], axis=1)
+    fig7 = go.Figure()
+    for ticker, couleur in [("SPCX", GRIS), ("ANT", TURQUOISE)]:
+        serie = parcours[ticker].dropna()
+        fig7.add_trace(go.Scatter(x=serie.index, y=(serie - 1) * 100, name=ticker, mode="lines+markers" if len(serie) < 3 else "lines",
+                                  line=dict(color=couleur, width=2.5), marker=dict(size=9),
+                                  hovertemplate="séance %{x} : %{y:+.1f} %<extra>" + ticker + "</extra>"))
+    fig7.add_hline(y=0, line_dash="dot", line_color="#475569", annotation_text="prix d'IPO")
+    fig7.update_layout(xaxis_title="Séances depuis la cotation", yaxis_title="Écart au prix d'IPO (%)", hovermode="x unified")
+    mise_en_forme(fig7, 430)
+    st.plotly_chart(fig7, width="stretch")
+
+    lignes = {
+        "Prix d'IPO": ("83 $", "135 $"),
+        "Produit brut de l'offre": ("81,3 Md$", "75,0 Md$"),
+        "Placement privé simultané": ("26 Md$ (fournisseurs de calcul)", "aucun"),
+        "Écart base diluée / non diluée": (f"{a['actions_diluees'] / a['actions_base'] - 1:+.0%}", f"{s['actions_diluees'] / s['actions_base'] - 1:+.0%}"),
+        "Qui contrôle": ("7 cofondateurs, environ 61 % des voix", "Elon Musk, 82,4 % des voix"),
+        "Part du capital des contrôlants": ("environ 13 %", "environ 46 % (estimation)"),
+        "Croissance du CA sur un an": ("x 12,3 (T3 2026)", "+15 % (T1 2026)"),
+        "Marge d'exploitation": ("-3,8 % (9M2026)", "-13,9 % (2025)"),
+        "Investissements / CA (2025)": ("4 % au bilan, calcul surtout loué", "111 %"),
+        "Rendement à l'ouverture / clôture J1": (f"{a['rendement_ouverture_j1']:+.1%} / {a['rendement_cloture_j1']:+.1%}",
+                                                f"{s['rendement_ouverture_j1']:+.1%} / {s['rendement_cloture_j1']:+.1%}"),
+        "Argent laissé sur la table": (f"{a['argent_laisse_sur_la_table'] / 1e9:.1f} Md$", f"{s['argent_laisse_sur_la_table'] / 1e9:.1f} Md$"),
+    }
+    st.dataframe(pd.DataFrame([(k, v[0], v[1]) for k, v in lignes.items()], columns=["", "Anthropic", "SpaceX"]),
+                 hide_index=True, width="stretch")
+    st.markdown(
+        "<p class='note'>SpaceX possède ses actifs (fusées, satellites) et investit plus que son chiffre d'affaires ; "
+        "Anthropic loue sa capacité de calcul et porte 900,9 Md$ d'engagements hors bilan. "
+        "Cinq mois après son IPO, SpaceX cote à peu près son prix d'introduction après être montée à +57 %. "
+        "Détail dans docs/05_comparaison_spacex.md.</p>", unsafe_allow_html=True)
